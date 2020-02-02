@@ -53,16 +53,29 @@ main:
     #t3 contains median
 firstvssecond:
     blt $t0, $t1, secondvsthird
+    
     j firstvsthird
 
 secondvsthird:
     blt $t1, $t2, msecond
+    blt $t2, $t0, mfirst
     # 1 < 3 < 2
+    li $v0, 1
+    move $a0, $t2
+    syscall
+
+
     j mthird
 
 firstvsthird:
     blt $t0, $t2, mfirst
+    blt $t2, $t1, msecond 
     # 2 < 3 < 1
+    li $v0, 1
+    move $a0, $t2
+    syscall
+
+
     j mthird
 
 mfirst:
