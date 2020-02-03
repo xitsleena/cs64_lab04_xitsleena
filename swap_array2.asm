@@ -186,45 +186,16 @@ doSwap:
 
         # TODO: fill in the code
     # t0 = x, t1 = y, t2 = 4, t4 = shift # to access arrray
-    li $t0, 0 
+    li $t0, 0
     li $t1, 8
     li $t2, 4
 
     la $t4, myArray
 loop: 
 
-    # check if x == 4
-    beq $t0, $t2, done
-    
-    # t3 = temp, temp = myArray[x] 
-    sll $t5, $t0, 2
-    addu $t6, $t5, $t4
-    lw $t3, 0($t6) # storing myArray[x] in $t3
-    
-    # getting myArray[y]
-    sll $t5, $t1, 2
-    addu $t6, $t5, $t4
-    lw $t7, 0($t6)
-
-    #accessing myArray[x]
-    sll $t5, $t0, 2
-    addu $t6, $t5, $t4
-
-    #myArray[x] = myArray[y]
-    sw $t7, 0($t6)
-
-    # accessing myArray[y]
-    sll $t5, $t1, 2
-    addu $t6, $t5, $t4
-
-    #myArray[y] = temp
-    sw $t3, 0($t6)
-    
-    # increment / decrement 
-    addiu $t0, $t0, 1
-    subu $t1, $t1, 1
+    addi $t0, $t0, 1
+    sub $t1, $t1, 1
 
     j loop
-done:
         # do not remove this last line
     jr $ra
