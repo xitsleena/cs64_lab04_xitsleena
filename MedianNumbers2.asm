@@ -54,40 +54,50 @@ main:
     la $a0, median
     syscall
 
-    #t0-2 contain the numbers
-    #t3 contains median
-    # a , b , c
-firstoversecond:
-    blt $t0, $t1, secondoverfirst 
-    blt $t2, $t1, msecond
-    blt $t2, $t0, mthird
-    j mfirst
 
-secondoverfirst:
-    blt $t2, $t0, mfirst
-    blt $t2, $t1, mthird
-    j msecond
+	blt $t0, $t1, firstCompare
+	blt $t2, $t0, secondCompare
 
-mfirst:
-    li $v0, 1
-    move $a0, $t0
-    syscall
+	li $v0, 1
+	move $a0, $t0
+	syscall
+	b exit
 
-    j exit
+firstCompare:
+	blt $t0, $t2, secondCompare
 
-msecond:
-    li $v0, 1
-    move $a0, $t1
-    syscall
+	# $t0 is median
+	li $v0, 1
+	move $a0, $t0
+	syscall
+	b exit
 
-    j exit
+secondCompare:
+	blt $t1, $t2, middle
 
-mthird:
-    li $v0, 1
-    move $a0, $t2
-    syscall
+	# $t2 is median
+	li $v0, 1
+	move $a0, $t2
+	syscall
+	b exit
 
-    j exit 
+thirdCompare:
+	blt $t2, $t1, middle
+
+	li $v0, 1
+	move $a0, $t2
+	syscall
+	b exit
+
+middle:
+	# $t1 is median
+	li $v0, 1
+	move $a0, $t1
+	syscall
+	b exit
+
+
+
 exit:
     li $v0, 10
     syscall
